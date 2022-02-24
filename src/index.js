@@ -37,8 +37,30 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
-function decode(expr) {
-    // write your solution here
+  function decode(expr) {
+    
+    let result = "";
+    const arrayCodes = [...expr.matchAll(/(?:0|1|\*){10}/gm)];
+
+    arrayCodes.map(code => {
+        let morseCode = "";
+        let bit = code[0];
+        for (let index = 0; index < bit.length; index += 2) {
+            if(bit[index] === "1" && bit[index+1] === "1") {
+                morseCode += "-";
+            }
+            else if(bit[index] === "1" && bit[index+1] === "0"){
+                morseCode += ".";
+            }
+        }
+        let encodedChar = MORSE_TABLE[morseCode];
+        if(encodedChar === undefined) {
+            result += ' ';
+        }
+        else { result += encodedChar;}
+    });
+
+    return result;
 }
 
 module.exports = {
